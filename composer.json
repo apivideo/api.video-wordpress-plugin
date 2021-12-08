@@ -1,0 +1,7 @@
+{
+    "require": {
+        "api-video/php-api-client": "^0.0.7",
+        "symfony/http-client": "^5.3",
+        "nyholm/psr7": "^1.4"
+    }
+}
