@@ -10,7 +10,7 @@ const product = urlParams.get('page');
   const realtoken = realTokenData.dataset.realtoken;
   const dropArea = document.querySelector('#dropContainer');
 	const input = document.querySelector('#fileInput');
-	const url = "https://sandbox.api.video/upload?token=" + realtoken;
+	const url = "https://ws.api.video/upload?token=" + realtoken;
 	var chunkCounter = 0;
 	const chunkSize = 5242880;
 	var videoId = "";
