@@ -13,7 +13,7 @@ function av_get_token($client) {
 
 // Get client function
 function av_get_client() {
-  require APIVIDEO_ROOT_URL . 'vendor/autoload.php';
+  require_once APIVIDEO_ROOT_URL . 'vendor/autoload.php';
 
   $httpClient = new \Symfony\Component\HttpClient\Psr18Client();
 
