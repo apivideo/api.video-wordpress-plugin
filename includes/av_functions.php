@@ -18,13 +18,9 @@ function av_get_client() {
   $httpClient = new \Symfony\Component\HttpClient\Psr18Client();
 
   $apikey = get_option("av_api_key");
-  if(!(strlen($apikey) == 43)):
-      echo "Your API KEY is wrong!";
-      exit();
-  endif;
 
   return new \ApiVideo\Client\Client(
-      'https://sandbox.api.video',
+      'https://ws.api.video',
       $apikey,
       $httpClient
   );
