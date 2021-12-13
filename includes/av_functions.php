@@ -13,18 +13,14 @@ function av_get_token($client) {
 
 // Get client function
 function av_get_client() {
-  require APIVIDEO_ROOT_URL . 'vendor/autoload.php';
+  require_once APIVIDEO_ROOT_URL . 'vendor/autoload.php';
 
   $httpClient = new \Symfony\Component\HttpClient\Psr18Client();
 
   $apikey = get_option("av_api_key");
-  if(!(strlen($apikey) == 43)):
-      echo "Your API KEY is wrong!";
-      exit();
-  endif;
 
   return new \ApiVideo\Client\Client(
-      'https://sandbox.api.video',
+      'https://ws.api.video',
       $apikey,
       $httpClient
   );
