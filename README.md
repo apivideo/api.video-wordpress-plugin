@@ -9,12 +9,13 @@ api.video's WordPress plugin makes it easy and fast to work with streaming video
 
 - Easily upload videos from your local computer. Videos will be processed and prepared for [adaptive bitrate streaming](https://en.wikipedia.org/wiki/Adaptive_bitrate_streaming). With the [fastest encoding times](https://api.video/encoding/) on the market, your video will be ready for streaming in a few moments.
 - Quickly update video metadata from the WordPress admin interface. 
-– Embed videos using the included [api.video player](https://api.video/player/). The player is responsive to work on all screen sizes and you can customize the player to look and function exactly how you want it to.
+– Embed videos using the included [api.video player](https://api.video/player/). The player is responsive to work on all screen sizes and you can customize the player to look and function exactly how you want it to.
 ## Installation & getting started
 
-1. Download the plugin and uncompress the file into your WordPress plugins directory, just like any other plugin.
+1. Download the plugin and then upload the `.zip` file on your WordPress plugins admin page, just like any other plugin.
+2. Once you've activated the plugin, head to the api.video settings page and enter your API key.
+3. That's it! You're now ready to upload videos and start embedding them into your pages and posts.
 
-**TODO**
 ## Have you gotten use from this API client?
 
 Please take a moment to leave a star on the client ⭐
