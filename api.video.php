@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Plugin Name: api.video
  * Plugin URI: https://api.video/
  * Description: <a target="_blank" href="https://api.video">api.video</a> provides video infrastructure for product builders. Use <a target="_blank" href="https://api.video">api.video</a> lightning-fast video APIs for integrating, scaling, and managing on-demand & low latency live streaming features in your WordPress site.
@@ -8,15 +8,8 @@
  * Author URI: https://vvm.agency/
  * 
  * 
- * 
- * 
- * fix this
- *  |
- *  |
- *  |
- * \/ 
- * License: the slug of the plugin’s licence (i.e. GPL2)
- * License URI: the link to the full text of the license (i.e. https://www.gnu.org/licenses/gpl-2.0.html)
+ * License: MIT
+ * License URI: https://opensource.org/licenses/MIT
  * Text Domain: the text domain of the plugin
  * Domain Path: where to find the translation files (see How to Internationalize Your Plugin)
  */
