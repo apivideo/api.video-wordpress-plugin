@@ -184,7 +184,7 @@ function av_library() { ?>
                   <a target="_blank" href="<?= $video->assets->mp4 ?>">Download</a>
                   <span class="links-separator">|</span>
                 <?php endif; ?>
-                <a class="custom-edit-link" target="_blank" href="https://go.api.video/videos/<?= $video->videoId; ?>">Edit on api.video</a>
+                <a class="custom-edit-link" target="_blank" href="https://dashboard.api.video/videos/<?= $video->videoId; ?>">Edit on api.video</a>
                 <span class="links-separator">|</span>
                 <input type="submit" class="button-link custom-delete-link wp-delete-permanently" name="deleteavideo" value="Delete permanently" />
                 <input type="text" class="form-hidden-text-input" name="deletevideoid" value="<?= $video->videoId ?>" />
