@@ -52,11 +52,11 @@ function av_shortcode( $atts ) {
   // get client
   $client = av_get_client();
 
-  // get all vidoes and id's
+  // get all videos and id's
   $all_videos = array();
-  $video_list = json_decode($client->videos()->list());
+  $video_list = json_decode($client->videos()->list(["sortBy" => "publishedAt", "sortOrder" => "desc", "pageSize" => 50]));
 
-  // loop through all vidoes
+  // loop through all videos
   foreach($video_list->data as $single_video):
     array_push($all_videos, $single_video->videoId);
   endforeach;
