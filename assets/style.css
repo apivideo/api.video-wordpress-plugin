@@ -497,3 +497,8 @@ height: 100%;
     display: none;
   }
 }
+
+.api-error-message {
+  color: red;
+  margin-top: 0 !important;
+}

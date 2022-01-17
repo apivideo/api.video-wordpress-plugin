@@ -9,6 +9,15 @@ function av_library() { ?>
     parse_str($query_str, $query_params);
   ?>
 
+  <?php 
+  // Get client
+  $client = av_get_client();
+  if(!$client): ?>
+    <p class="api-error-message">Api key is not added/valid, please go to <a href="admin.php?page=settings-api-video">settings</a> page and update it with correct one</p>
+    <?php return;
+  endif;
+  ?>
+
   <!-- Wrap section -->
   <div class="wrap">
     <h1 class="wp-heading-inline">Library</h1>
@@ -16,8 +25,6 @@ function av_library() { ?>
     <hr class="wp-header-end">
 
     <?php
-      // Get client
-      $client = av_get_client();
 
       // Handle if delete button is clicked
       if (isset($_POST["deleteavideo"])) {
@@ -184,7 +191,7 @@ function av_library() { ?>
                   <a target="_blank" href="<?= $video->assets->mp4 ?>">Download</a>
                   <span class="links-separator">|</span>
                 <?php endif; ?>
-                <a class="custom-edit-link" target="_blank" href="https://dashboard.api.video/videos/<?= $video->videoId; ?>">Edit on api.video</a>
+                <a class="custom-edit-link" target="_blank" href="https://go.api.video/videos/<?= $video->videoId; ?>">Edit on api.video</a>
                 <span class="links-separator">|</span>
                 <input type="submit" class="button-link custom-delete-link wp-delete-permanently" name="deleteavideo" value="Delete permanently" />
                 <input type="text" class="form-hidden-text-input" name="deletevideoid" value="<?= $video->videoId ?>" />

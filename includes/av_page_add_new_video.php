@@ -1,5 +1,12 @@
 <?php
-function av_add_new_video() { ?>
+function av_add_new_video() {
+  $client = av_get_client();
+  if(!$client): ?>
+    <p class="api-error-message">Api key is not added/valid, please go to <a href="admin.php?page=settings-api-video">settings</a> page and update it with correct one</p>
+    <?php return;
+  endif;
+  ?>
+
   <div class="wrap">
     <h2><?= esc_html(get_admin_page_title()) ?></h2>
   </div>
@@ -15,7 +22,6 @@ function av_add_new_video() { ?>
   <input type="file" id="fileInput" />
 
   <?php 
-  $client = av_get_client();
   $real_token = av_get_token($client); ?>
   <div data-realtoken="<?=$real_token?>" id="real-token-data" style="display: none;"></div> 
 
