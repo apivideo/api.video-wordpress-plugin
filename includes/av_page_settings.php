@@ -11,4 +11,12 @@ function api_settings_page() {
   <input id='api-video-settings-key' name='api.video_options[api_key]' type='text' value='<?= get_option("av_api_key"); ?>' />
       <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e( 'Save' ); ?>" />
   </form>
+  <?php 
+  // Get client
+  $client = av_get_client();
+  if(!$client): ?>
+    <p class="api-error-message">Api key is not added/valid</p>
+    <?php return;
+  endif;
+  ?>
 <?php }

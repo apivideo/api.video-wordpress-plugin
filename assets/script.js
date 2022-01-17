@@ -83,6 +83,7 @@ const product = urlParams.get('page');
 					playerUrl = resp.assets.player;
 					console.log("all uploaded! Watch here: ", playerUrl);
 					document.getElementById("video-information").innerHTML = "Watch the video <a href='/wp-admin/admin.php?page=api.video-library&videoid=" + videoId +  "'>here</a>";
+          document.getElementById("fileInput").value = null;
 					document.getElementById("fileInput").disabled = false;
 					dropArea.classList.remove("currentUpload");
 					document.getElementById("custom-bg-grey-containter").style.display = "none";
@@ -99,7 +100,7 @@ const product = urlParams.get('page');
     }
     
     $(".button-form-trigger").on("click", function(){
-      $("#form-button-trigger").trigger('click');
+      $(this).parent().parent().find('#head-form').find('#form-button-trigger').trigger('click');
     });
     
     if($(".video-info-frame").hasClass("active")) {

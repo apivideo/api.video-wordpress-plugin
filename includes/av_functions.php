@@ -19,10 +19,27 @@ function av_get_client() {
 
   $apikey = get_option("av_api_key");
 
+  $ch = curl_init( 'https://ws.api.video/auth/api-key' );
+  $payload = json_encode( array( "apiKey" => $apikey ) );
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Accept: application/json'));
+  $result = curl_exec($ch);
+  curl_close($ch);
+
+  $result = json_decode($result);
+  $token_type = $result->token_type;
+  $access_token = $result->access_token;
+
+  if(!$token_type && !$access_token):
+    return false;
+  endif;
+
   return new \ApiVideo\Client\Client(
-      'https://ws.api.video',
-      $apikey,
-      $httpClient
+    'https://ws.api.video',
+    $apikey,
+    $httpClient
   );
 }
 
@@ -52,11 +69,11 @@ function av_shortcode( $atts ) {
   // get client
   $client = av_get_client();
 
-  // get all videos and id's
+  // get all vidoes and id's
   $all_videos = array();
-  $video_list = json_decode($client->videos()->list(["sortBy" => "publishedAt", "sortOrder" => "desc", "pageSize" => 50]));
+  $video_list = json_decode($client->videos()->list());
 
-  // loop through all videos
+  // loop through all vidoes
   foreach($video_list->data as $single_video):
     array_push($all_videos, $single_video->videoId);
   endforeach;
