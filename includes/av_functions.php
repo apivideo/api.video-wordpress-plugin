@@ -5,7 +5,7 @@ use ApiVideo\Client\Model\VideoUpdatePayload;
 // Get tokens
 function av_get_token($client) {
   $uploadTokens = $client->uploadTokens();
-  $tokenCreationPayload = new \ApiVideo\Client\Model\TokenCreationPayload(array("ttl" => '300'));
+  $tokenCreationPayload = new \ApiVideo\Client\Model\TokenCreationPayload(array("ttl" => 300));
   $ar = $uploadTokens->createToken($tokenCreationPayload);
   $token = json_decode($ar);
   return $token->token;
