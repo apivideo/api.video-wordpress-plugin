@@ -10,7 +10,7 @@ function av_get_token($client) {
   $token = json_decode($ar);
   return $token->token;
 }
-
+ 
 // Get client function
 function av_get_client() {
   require_once APIVIDEO_ROOT_URL . 'vendor/autoload.php';
@@ -116,6 +116,8 @@ add_action('wp_enqueue_scripts', 'av_css_for_front');
 
 // api.video register script for backend
 function av_scripts() {   
-  wp_enqueue_script( 'av_scripts', plugins_url( '../assets/script.js', __FILE__ ) );
-}
+  wp_enqueue_script( 'av_uploader', plugins_url( '../assets/api-video-uploader.js', __FILE__ ) );
+  wp_enqueue_script( 'av_script', plugins_url( '../assets/script.js', __FILE__ ) );
+} 
 add_action('admin_enqueue_scripts', 'av_scripts');
+  
