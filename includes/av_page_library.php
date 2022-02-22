@@ -57,10 +57,16 @@ function av_library() { ?>
       endif;
 
       // Check if videos exist
-      $videos = $client->videos()->list();
-      $videos_decoded = json_decode($videos);
-      if (!$videos_decoded->data) :
-        echo "<h4>No videos.</h4>";
+      $videos = [];
+      $currentPageNum = 0; 
+      do {
+          $currentPage = $client->videos()->list(["sortBy" => "publishedAt", "sortOrder" => "desc", "currentPage" => $currentPageNum]);
+          $currentPageNum++;
+          $videos = array_merge($videos, $currentPage->getData());
+      } while($currentPage->getPagination()->getCurrentPage() < $currentPage->getPagination()->getPagesTotal());
+
+      if (!$videos) :
+        echo "<h4>No videos.</h4>"; 
       endif; ?>
   </div>
   <!-- End of Wrap section -->
@@ -69,9 +75,10 @@ function av_library() { ?>
   <div class="videos-wrapper">
     <?php
       // Get videos from newest to oldest
-      $videos_decoded = array_reverse($videos_decoded->data);
+      $videos_decoded = $videos;
       // Loop for every video and check if there is extra class
       foreach ($videos_decoded as $video) :
+        $video = json_decode($video);
         if ($query_params['videoid'] == $video->videoId) : $extra_class = " active";
         else : $extra_class = "";
         endif; 
