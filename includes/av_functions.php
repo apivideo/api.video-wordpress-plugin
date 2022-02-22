@@ -111,6 +111,7 @@ add_action( 'admin_init', 'av_include_css');
 // api.video register css for frontend
 function av_css_for_front() {
   wp_register_style('av-style-front', plugins_url('../assets/style-front.css', __FILE__));
+  wp_enqueue_style('av-style-front');
 }
 add_action('wp_enqueue_scripts', 'av_css_for_front');
 
