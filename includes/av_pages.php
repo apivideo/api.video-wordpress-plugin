@@ -1,7 +1,7 @@
 <?php 
 // api.video register main page
-add_action('admin_menu', 'register_library_subpage');
-function register_library_subpage() {
+add_action('admin_menu', 'apivideowp_register_library_subpage');
+function apivideowp_register_library_subpage() {
   add_menu_page(
     __('api.video', 'api.video'),
     __('api.video', 'api.video'),
@@ -14,8 +14,8 @@ function register_library_subpage() {
 }
 
 // api.video Library page
-add_action('admin_menu', 'library_submenu_page');
-function library_submenu_page() {
+add_action('admin_menu', 'apivideowp_library_submenu_page');
+function apivideowp_library_submenu_page() {
   add_submenu_page(
     'api.video-library',
     '',
@@ -27,8 +27,8 @@ function library_submenu_page() {
 }
 
 // api.video Add New page
-add_action('admin_menu', 'register_addnew_subpage');
-function register_addnew_subpage() {
+add_action('admin_menu', 'apivideowp_register_addnew_subpage');
+function apivideowp_register_addnew_subpage() {
   add_submenu_page(
     'api.video-library',
     'Add New',
@@ -40,8 +40,8 @@ function register_addnew_subpage() {
 }
 
 // api.video settings page
-add_action('admin_menu', 'register_addnew_subpagee');
-function register_addnew_subpagee() {
+add_action('admin_menu', 'apivideowp_register_settings_subpage');
+function apivideowp_register_settings_subpage() {
   add_submenu_page(
     'api.video-library',
     'Settings',

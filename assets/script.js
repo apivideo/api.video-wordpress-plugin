@@ -39,7 +39,7 @@ const product = urlParams.get('page');
 
         uploader.upload()
           .then(function (video) {
-            document.getElementById("video-information").innerHTML = "Watch the video <a href='/wp-admin/admin.php?page=api.video-library&videoid=" + video.videoId + "'>here</a>";
+            document.getElementById("video-information").innerHTML = "Watch the video <a href='admin.php?page=api.video-library&videoid=" + video.videoId + "'>here</a>";
             document.getElementById("fileInput").value = null;
             document.getElementById("fileInput").disabled = false;
             dropArea.classList.remove("currentUpload");
@@ -99,9 +99,30 @@ const product = urlParams.get('page');
       $(this).prev().select();
     });
 
+    function loadCurrentVideoPlayer() {
+      var url = $(".video-info-frame.active .custom-iframe input").val();
+
+      if (!url) {
+        return;
+      }
+
+      var iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.frameborder = "0";
+      iframe.scrolling = "no";
+      iframe.allowfullscreen = "";
+
+      $(".video-info-frame.active .custom-iframe").append(iframe);
+    }
+
+    loadCurrentVideoPlayer();
+
     $(".apivideo-trig").click(function () {
       $(this).prev().addClass("active");
       $("#bg-for-videos").css("display", "block");
+      loadCurrentVideoPlayer();
     });
 
     $(".close-video-trig").on("click", function () {
@@ -130,9 +151,10 @@ function customfunction() {
 }
 
 function av_change_url() {
-  window.history.pushState("object or string", "Title", "/wp-admin/admin.php?page=api.video-library");
+  window.history.pushState("object or string", "Title", "admin.php?page=api.video-library");
 }
 
+/*
 var __nspid = "isrtzw";
 var __nsptags = [];
 (function (w, d) {
@@ -151,3 +173,4 @@ var __nsptags = [];
     w.onload = x;
   }
 }(window, document));
+*/
