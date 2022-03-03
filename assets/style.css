@@ -288,7 +288,6 @@ width: 21px;
 height: 22px; 
 background-repeat: no-repeat; 
 background-size: cover; 
-background-image: url('/wp-content/uploads/2021/11/download.png');
 }
 
 .custom-label-item {
@@ -339,7 +338,6 @@ align-items: center;
 cursor: help; 
 width: 19px; 
 height: 19px; 
-/* background-image: url('/wp-content/uploads/2021/12/questionmark.png'); background-size: cover; */
 }
 
 .custom-video-inputs .custom-input-margin {

@@ -1,17 +1,15 @@
 <?php
 function av_library() { ?>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-
+  
   <?php
     $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $query_str = parse_url($url, PHP_URL_QUERY);
     parse_str($query_str, $query_params);
   ?>
-
+ 
   <?php 
   // Get client
-  $client = av_get_client();
+  $client = apivideowp_get_client();
   if(!$client): ?>
     <p class="api-error-message">Api key is not added/valid, please go to <a href="admin.php?page=settings-api-video">settings</a> page and update it with correct one</p>
     <?php return;
@@ -28,7 +26,7 @@ function av_library() { ?>
 
       // Handle if delete button is clicked
       if (isset($_POST["deleteavideo"])) {
-        $client->videos()->delete($_POST['deletevideoid']);
+        $client->videos()->delete(sanitize_text_field($_POST['deletevideoid']));
       }
 
       // Handle if Save button is clicked!
@@ -44,16 +42,16 @@ function av_library() { ?>
         if ($_POST['input_mp4support']) : $mp4support = true;
         endif;
 
-        $av_tags = explode(',', $_POST['input_tags']);
-        $av_tags = str_replace(' ', '', $av_tags);
+        $apivideowp_tags = explode(',', sanitize_text_field($_POST['input_tags']));
+        $apivideowp_tags = str_replace(' ', '', $apivideowp_tags);
 
         $client->videos()->update($_POST['videoid'], (new \ApiVideo\Client\Model\VideoUpdatePayload())
-          ->setTitle($_POST['input_title'])
-          ->setDescription($_POST['input_description'])
+          ->setTitle(sanitize_text_field($_POST['input_title']))
+          ->setDescription(sanitize_textarea_field($_POST['input_description']))
           ->setPublic($public)
           ->setPanoramic($panoramic)
           ->setMp4Support($mp4support)
-          ->setTags($av_tags));
+          ->setTags($apivideowp_tags));
       endif;
 
       // Check if videos exist
@@ -85,7 +83,7 @@ function av_library() { ?>
       ?>
 
       <!-- Single video popup -->
-      <div class="video-info-frame<?= $extra_class; ?>" data-videoid="<?= $video->videoId ?>">
+      <div class="video-info-frame<?php echo(esc_attr($extra_class)) ?>" data-videoid="<?php echo(esc_attr($video->videoId)) ?>">
         <!-- Single video header -->
         <div class="video-frame-top-section">
           <div class="video-frame-header-text">
@@ -102,8 +100,8 @@ function av_library() { ?>
           <!-- Video -->
           <div class="video-info-left">
             <div class="custom-iframe">
-              <?= $video->assets->iframe ?>
-            </div>
+              <input type="hidden" value="<?php echo(esc_attr($video->assets->player)) ?>"/>
+            </div> 
           </div>
           <!-- End of Video -->
 
@@ -111,15 +109,15 @@ function av_library() { ?>
           <div class="video-info-right">
             <!-- Video info -->
             <div class="video-info-right-data">
-              <div><span class="video-info-bold-text">Video id: </span><span><?= $video->videoId; ?></span></div>
-              <div><span class="video-info-bold-text">Video created at: </span><span><?= get_video_date($video->createdAt); ?></span></div>
-              <div><span class="video-info-bold-text">Video published at: </span><span><?= get_video_date($video->publishedAt); ?></span></div>
-              <div><span class="video-info-bold-text">Video updated at: </span><span><?= get_video_date($video->updatedAt); ?></span></div>
+              <div><span class="video-info-bold-text">Video id: </span><span><?php echo(esc_html($video->videoId)) ?></span></div>
+              <div><span class="video-info-bold-text">Video created at: </span><span><?php echo(esc_html(apivideowp_get_video_date($video->createdAt))) ?></span></div>
+              <div><span class="video-info-bold-text">Video published at: </span><span><?php echo(esc_html(apivideowp_get_video_date($video->publishedAt))) ?></span></div>
+              <div><span class="video-info-bold-text">Video updated at: </span><span><?php echo(esc_html(apivideowp_get_video_date($video->updatedAt))) ?></span></div>
             </div>
             <!-- End of Video info-->
 
             <!-- General form -->
-            <form method="POST" id="head-form" action="admin.php?page=api.video-library&videoid=<?= $video->videoId ?>">
+            <form method="POST" id="head-form" action="admin.php?page=api.video-library&videoid=<?php echo(esc_attr($video->videoId)) ?>">
               <div class="av-settings">
                 <!-- Text for video -->
                 <div class="custom-private-text">
@@ -150,19 +148,19 @@ function av_library() { ?>
                 <!-- Title -->
                 <div class="custom-video-inputs">
                   <label for="attachment-details-two-column-title" class="name custom-label-item">Title: </label>
-                  <input class="custom-input-margin av-custom-input custom-copy-item" id="clickable-item-1" name="input_title" type="text" value="<?= $video->title ?>">
+                  <input class="custom-input-margin av-custom-input custom-copy-item" id="clickable-item-1" name="input_title" type="text" value="<?php echo(esc_attr($video->title)) ?>">
                 </div>
 
                 <!-- Description -->
                 <div class="custom-video-inputs">
                   <label for="attachment-details-two-column-copy-link" class="name custom-label-item">Description: </label>
-                  <textarea class="custom-input-margin av-custom-input custom-copy-item" id="clickable-item-2" name="input_description" type="text" class="attachment-details-copy-link"><?= $video->description ?></textarea>
+                  <textarea class="custom-input-margin av-custom-input custom-copy-item" id="clickable-item-2" name="input_description" type="text" class="attachment-details-copy-link"><?php echo(esc_textarea($video->description)) ?></textarea>
                 </div>
 
                 <!-- Tags -->
                 <div class="custom-video-inputs tags">
                   <label for="attachment-details-two-column-copy-link" class="name custom-label-item">Tags: </label>
-                  <input class="custom-input-margin av-custom-input custom-copy-item" name="input_tags" id="clickable-item-6" type="text" class="attachment-details-copy-link" value="<?php av_tags($video->tags); ?>">
+                  <input class="custom-input-margin av-custom-input custom-copy-item" name="input_tags" id="clickable-item-6" type="text" class="attachment-details-copy-link" value="<?php apivideowp_tags($video->tags); ?>">
                 </div>
 
                 <!-- Separator -->
@@ -173,20 +171,20 @@ function av_library() { ?>
                 <!-- Video URL -->
                 <div class="custom-video-inputs">
                   <label for="attachment-details-two-column-copy-link" class="name custom-label-item">Video URL: </label>
-                  <input class="av-custom-input custom-copy-item" name="input_video_url" id="clickable-item-7" type="text" class="attachment-details-copy-link" readonly value="<?= $video->assets->player ?>">
+                  <input class="av-custom-input custom-copy-item" name="input_video_url" id="clickable-item-7" type="text" class="attachment-details-copy-link" readonly value="<?php echo(esc_attr($video->assets->player)) ?>">
                   <div class="clickable-item" title="Copy"></div>
                 </div>
 
                 <!-- Shortcode -->
                 <div class="custom-video-inputs">
                   <label for="attachment-details-two-column-copy-link" class="name custom-label-item">Shortcode: </label>
-                  <input class="custom-copy-item custom-input-width-75" id="clickable-item-8" type="text" readonly value="[api.video video_id=<?= $video->videoId; ?>]">
+                  <input class="custom-copy-item custom-input-width-75" id="clickable-item-8" type="text" readonly value="[api.video video_id=<?php echo(esc_attr($video->videoId)) ?>]">
                   <div class="clickable-item" title="Copy"></div>
                 </div>
 
                 <!-- Save button for form -->
                 <input type="submit" name="submit-button" id="form-button-trigger" class="button button-primary" value="Save">
-                <input type="text" id="hidden-video-id" name="videoid" value="<?= $video->videoId ?>">
+                <input type="text" id="hidden-video-id" name="videoid" value="<?php echo(esc_attr($video->videoId)) ?>">
               </div>
             </form>
             <!-- End of General form -->
@@ -195,13 +193,13 @@ function av_library() { ?>
             <div class="actions settings-bar">
               <form method="POST" class="action-delete-form" onsubmit="return customfunction()">
                 <?php if ($video->assets->mp4) : ?>
-                  <a target="_blank" href="<?= $video->assets->mp4 ?>">Download</a>
+                  <a target="_blank" href="<?php echo(esc_attr($video->assets->mp4)) ?>">Download</a>
                   <span class="links-separator">|</span>
                 <?php endif; ?>
-                <a class="custom-edit-link" target="_blank" href="https://go.api.video/videos/<?= $video->videoId; ?>">Edit on api.video</a>
+                <a class="custom-edit-link" target="_blank" href="https://go.api.video/videos/<?php echo(esc_attr($video->videoId)) ?>">Edit on api.video</a>
                 <span class="links-separator">|</span>
                 <input type="submit" class="button-link custom-delete-link wp-delete-permanently" name="deleteavideo" value="Delete permanently" />
-                <input type="text" class="form-hidden-text-input" name="deletevideoid" value="<?= $video->videoId ?>" />
+                <input type="text" class="form-hidden-text-input" name="deletevideoid" value="<?php echo(esc_attr($video->videoId)) ?>" />
               </form>
               <a class="button-form-trigger button button-primary">Save</a>
             </div>
@@ -213,8 +211,8 @@ function av_library() { ?>
       </div>
       <!-- End of Single video popup -->
 
-      <div class="single-video apivideo-trig" style="background-image: url('<?= $video->assets->thumbnail; ?>');">
-        <div class="filenamee"><?= $video->title ?></div>
+      <div class="single-video apivideo-trig" style="background-image: url('<?php echo(esc_attr($video->assets->thumbnail)) ?>');">
+        <div class="filenamee"><?php echo(esc_html($video->title)) ?></div>
       </div>
     <?php endforeach; ?>
   </div>
