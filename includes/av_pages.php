@@ -7,7 +7,7 @@ function apivideowp_register_library_subpage() {
     __('api.video', 'api.video'),
     'manage_options',
     'api.video-library',
-    'av_library',
+    'apivideowp_library',
     'dashicons-format-video',
     10
   );
@@ -22,7 +22,7 @@ function apivideowp_library_submenu_page() {
     'Library',
     'manage_options',
     'api.video-library',
-    'av_library'
+    'apivideowp_library'
   ); 
 }
 
@@ -35,7 +35,7 @@ function apivideowp_register_addnew_subpage() {
     'Add New',
     'manage_options',
     'add-new-video',
-    'av_add_new_video'
+    'apivideowp_add_new_video'
   );
 }
 
@@ -48,7 +48,7 @@ function apivideowp_register_settings_subpage() {
     'Settings',
     'manage_options',
     'settings-api-video',
-    'api_settings_page'
+    'apivideowp_api_settings_page'
   );
 }
 ?>
