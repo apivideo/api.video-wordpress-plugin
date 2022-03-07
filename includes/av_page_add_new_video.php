@@ -1,5 +1,5 @@
 <?php
-function av_add_new_video() {
+function apivideowp_add_new_video() {
   $client = apivideowp_get_client();
   if(!$client): ?>
     <p class="api-error-message">Api key is not added/valid, please go to <a href="admin.php?page=settings-api-video">settings</a> page and update it with correct one</p>
