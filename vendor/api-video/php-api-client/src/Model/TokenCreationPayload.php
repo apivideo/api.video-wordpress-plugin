@@ -45,6 +45,9 @@ class TokenCreationPayload implements ModelInterface, \JsonSerializable
             [
                 'ttl' => 'getTtl'
             ],
+            [
+                'ttl' => null
+            ],
             null
         );
     }
@@ -113,7 +116,7 @@ class TokenCreationPayload implements ModelInterface, \JsonSerializable
     /**
      * Sets ttl
      *
-     * @param int|null $ttl Time in seconds that the token will be active. A value of 0 means that the token has no expiration date. The default is to have no expiration.
+     * @param int|null $ttl Time in seconds that the token will be active. A value of 0 means that the token has no exipration date. The default is to have no expiration.
      *
      * @return self
      */
