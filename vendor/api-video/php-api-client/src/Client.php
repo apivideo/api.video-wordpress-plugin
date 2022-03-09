@@ -52,6 +52,15 @@ class Client
         $this->baseClient = new BaseClient($baseUri, $apiKey, $httpClient, $requestFactory, $streamFactory, $chunkSize);
     }
 
+    /**
+     * @param string $applicationName the application name. Allowed characters: A-Z, a-z, 0-9, -. Max length: 50.
+     * @param string $applicationVersion the application version (optional). Pattern: xxx[.yyy][.zzz].
+     */
+    public function setApplicationName(string $applicationName, string $applicationVersion = "")
+    {
+        $this->baseClient->setApplicationName($applicationName, $applicationVersion);
+    }
+
     
     /**
      * @return \ApiVideo\Client\Api\CaptionsApi
@@ -135,6 +144,18 @@ class Client
         }
 
         return $this->services['videos'];
+    }
+    
+    /**
+     * @return \ApiVideo\Client\Api\WatermarksApi
+     */
+    public function watermarks(): \ApiVideo\Client\Api\WatermarksApi
+    {
+        if (!array_key_exists('watermarks', $this->services)) {
+            $this->services['watermarks'] = new \ApiVideo\Client\Api\WatermarksApi($this->baseClient);
+        }
+
+        return $this->services['watermarks'];
     }
     
     /**

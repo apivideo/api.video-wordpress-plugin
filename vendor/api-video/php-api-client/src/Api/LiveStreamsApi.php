@@ -21,6 +21,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use ApiVideo\Client\Request;
 use ApiVideo\Client\ObjectSerializer;
 use ApiVideo\Client\VideoUploader;
+use ApiVideo\Client\ProgressiveUploadSession;
 
 /**
  * @category Class
@@ -102,6 +103,7 @@ class LiveStreamsApi implements ApiInterface
         );
     }
 
+
     /**
      * Delete a thumbnail
      *
@@ -164,6 +166,7 @@ class LiveStreamsApi implements ApiInterface
             $httpBody
         );
     }
+
 
     /**
      * List all live streams
@@ -252,6 +255,7 @@ class LiveStreamsApi implements ApiInterface
         );
     }
 
+
     /**
      * Show live stream
      *
@@ -314,6 +318,7 @@ class LiveStreamsApi implements ApiInterface
             $httpBody
         );
     }
+
 
     /**
      * Update a live stream
@@ -389,6 +394,7 @@ class LiveStreamsApi implements ApiInterface
         );
     }
 
+
     /**
      * Create live stream
      *
@@ -447,11 +453,12 @@ class LiveStreamsApi implements ApiInterface
         );
     }
 
+
     /**
      * Upload a thumbnail
      *
      * @param  string $liveStreamId The unique ID for the live stream you want to upload. (required)
-     * @param  \SplFileObject $file The image to be added as a thumbnail. (required)
+     * @param  \SplFileObject $file The .jpg image to be added as a thumbnail. (required)
      *
      * @throws \ApiVideo\Client\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -470,7 +477,7 @@ class LiveStreamsApi implements ApiInterface
      * Create request for operation 'uploadThumbnail'
      *
      * @param  string $liveStreamId The unique ID for the live stream you want to upload. (required)
-     * @param  \SplFileObject $file The image to be added as a thumbnail. (required)
+     * @param  \SplFileObject $file The .jpg image to be added as a thumbnail. (required)
      *
      * @throws \InvalidArgumentException
      * @return Request
@@ -536,5 +543,6 @@ class LiveStreamsApi implements ApiInterface
             $httpBody
         );
     }
+
 
 }

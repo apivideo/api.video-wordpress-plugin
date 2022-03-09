@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3e1a66aa1fe54795e6610fdc8601eae",
+    "content-hash": "d5aa97127fa3302272f3ab6b2d590472",
     "packages": [
         {
             "name": "api-video/php-api-client",
-            "version": "v0.0.7",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/apivideo/php-api-client.git",
-                "reference": "eb39b8105ec48163bf5f9554828cacbcaaa60dd3"
+                "url": "https://github.com/apivideo/api.video-php-client.git",
+                "reference": "7a4ae214e2adeefaaf764fda442e72081e1d58c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apivideo/php-api-client/zipball/eb39b8105ec48163bf5f9554828cacbcaaa60dd3",
-                "reference": "eb39b8105ec48163bf5f9554828cacbcaaa60dd3",
+                "url": "https://api.github.com/repos/apivideo/api.video-php-client/zipball/7a4ae214e2adeefaaf764fda442e72081e1d58c3",
+                "reference": "7a4ae214e2adeefaaf764fda442e72081e1d58c3",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,11 @@
             "keywords": [
                 "api.video"
             ],
-            "time": "2021-10-06T10:09:27+00:00"
+            "support": {
+                "issues": "https://github.com/apivideo/api.video-php-client/issues",
+                "source": "https://github.com/apivideo/api.video-php-client/tree/v1.2.2"
+            },
+            "time": "2022-03-09T17:36:05+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -1006,5 +1010,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

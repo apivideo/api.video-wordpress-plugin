@@ -1,5 +1,5 @@
 <?php
-function api_settings_page() {
+function apivideowp_api_settings_page() {
   if(isset($_POST['api_video_options']['api_key'])):
     update_option("av_api_key", sanitize_text_field($_POST['api_video_options']['api_key']));
   endif; ?>
