@@ -31,9 +31,11 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
         return new ModelDefinition(
             'player-theme-creation-payload',
             [
+                'name' => 'string',
                 'text' => 'string',
                 'link' => 'string',
                 'linkHover' => 'string',
+                'linkActive' => 'string',
                 'trackPlayed' => 'string',
                 'trackUnplayed' => 'string',
                 'trackBackground' => 'string',
@@ -47,9 +49,11 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
                 'forceLoop' => 'bool'
             ],
             [
+                'name' => null,
                 'text' => null,
                 'link' => null,
                 'linkHover' => null,
+                'linkActive' => null,
                 'trackPlayed' => null,
                 'trackUnplayed' => null,
                 'trackBackground' => null,
@@ -63,9 +67,11 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
                 'forceLoop' => null
             ],
             [
+                'name' => 'name',
                 'text' => 'text',
                 'link' => 'link',
                 'linkHover' => 'linkHover',
+                'linkActive' => 'linkActive',
                 'trackPlayed' => 'trackPlayed',
                 'trackUnplayed' => 'trackUnplayed',
                 'trackBackground' => 'trackBackground',
@@ -79,9 +85,11 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
                 'forceLoop' => 'forceLoop'
             ],
             [
+                'name' => 'setName',
                 'text' => 'setText',
                 'link' => 'setLink',
                 'linkHover' => 'setLinkHover',
+                'linkActive' => 'setLinkActive',
                 'trackPlayed' => 'setTrackPlayed',
                 'trackUnplayed' => 'setTrackUnplayed',
                 'trackBackground' => 'setTrackBackground',
@@ -95,9 +103,11 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
                 'forceLoop' => 'setForceLoop'
             ],
             [
+                'name' => 'getName',
                 'text' => 'getText',
                 'link' => 'getLink',
                 'linkHover' => 'getLinkHover',
+                'linkActive' => 'getLinkActive',
                 'trackPlayed' => 'getTrackPlayed',
                 'trackUnplayed' => 'getTrackUnplayed',
                 'trackBackground' => 'getTrackBackground',
@@ -109,6 +119,24 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
                 'forceAutoplay' => 'getForceAutoplay',
                 'hideTitle' => 'getHideTitle',
                 'forceLoop' => 'getForceLoop'
+            ],
+            [
+                'name' => null,
+                'text' => null,
+                'link' => null,
+                'linkHover' => null,
+                'linkActive' => null,
+                'trackPlayed' => null,
+                'trackUnplayed' => null,
+                'trackBackground' => null,
+                'backgroundTop' => null,
+                'backgroundBottom' => null,
+                'backgroundText' => null,
+                'enableApi' => null,
+                'enableControls' => null,
+                'forceAutoplay' => null,
+                'hideTitle' => null,
+                'forceLoop' => null
             ],
             null
         );
@@ -130,9 +158,11 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
+        $this->container['name'] = $data['name'] ?? null;
         $this->container['text'] = $data['text'] ?? null;
         $this->container['link'] = $data['link'] ?? null;
         $this->container['linkHover'] = $data['linkHover'] ?? null;
+        $this->container['linkActive'] = $data['linkActive'] ?? null;
         $this->container['trackPlayed'] = $data['trackPlayed'] ?? null;
         $this->container['trackUnplayed'] = $data['trackUnplayed'] ?? null;
         $this->container['trackBackground'] = $data['trackBackground'] ?? null;
@@ -155,6 +185,10 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['name']) && (mb_strlen($this->container['name']) > 100)) {
+            $invalidProperties[] = "invalid value for 'name', the character length must be smaller than or equal to 100.";
+        }
+
         return $invalidProperties;
     }
 
@@ -169,6 +203,34 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets name
+     *
+     * @return string|null
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     *
+     * @param string|null $name Add a name for your player theme here.
+     *
+     * @return self
+     */
+    public function setName($name)
+    {
+        if (!is_null($name) && (mb_strlen($name) > 100)) {
+            throw new \InvalidArgumentException('invalid length for $name when calling PlayerThemeCreationPayload., must be smaller than or equal to 100.');
+        }
+
+        $this->container['name'] = $name;
+
+        return $this;
+    }
 
     /**
      * Gets text
@@ -238,6 +300,30 @@ class PlayerThemeCreationPayload implements ModelInterface, \JsonSerializable
     public function setLinkHover($linkHover)
     {
         $this->container['linkHover'] = $linkHover;
+
+        return $this;
+    }
+
+    /**
+     * Gets linkActive
+     *
+     * @return string|null
+     */
+    public function getLinkActive()
+    {
+        return $this->container['linkActive'];
+    }
+
+    /**
+     * Sets linkActive
+     *
+     * @param string|null $linkActive RGBA color for the play button when hovered.
+     *
+     * @return self
+     */
+    public function setLinkActive($linkActive)
+    {
+        $this->container['linkActive'] = $linkActive;
 
         return $this;
     }

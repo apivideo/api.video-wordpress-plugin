@@ -1,6 +1,5 @@
 <?php
 use ApiVideo\Client\Client;
-use ApiVideo\Client\Model\VideoUpdatePayload;
 
 // Get tokens
 function apivideowp_get_token($client)
@@ -36,11 +35,15 @@ function apivideowp_get_client()
         return false;
     endif;
 
-    return new \ApiVideo\Client\Client(
+    $client = new \ApiVideo\Client\Client(
         'https://ws.api.video',
         $apikey,
         $httpClient
     );
+
+    $client->setApplicationName("wordpress-plugin", "1.0.5");
+
+    return $client;
 }
 
 // convert video date and return it
@@ -69,29 +72,11 @@ function apivideowp_tags($arr)
 // function for generate shortcode
 function apivideowp_shortcode($atts)
 {
-    // get client
-    $client = apivideowp_get_client();
-
-    // get all vidoes and id's
-    $all_videos = array();
-    $video_list = json_decode($client->videos()->list());
-
-    // loop through all vidoes
-    foreach ($video_list->data as $single_video):
-        array_push($all_videos, $single_video->videoId);
-    endforeach;
-
-    // check if current id exist
-    if (in_array($atts['video_id'], $all_videos, true)):
-        $check_if_public = json_decode($client->videos()->get($atts['video_id']));
-        // check if video is public or not
-        if ($check_if_public->public == "1"):
-            $public_video = json_decode($client->videos()->get($atts['video_id']));
-            $video_html = $public_video->assets->iframe;
-            return "<div class='video-iframe'>" . $video_html . "</div>";
-        endif;
-    endif;
-    return;
+    $videoId = $atts['video_id']; 
+    if(preg_match_all('/^[a-zA-Z0-9]+$/', $videoId) == 0) {
+        return "";
+    } 
+    return '<div class="video-iframe"><iframe loading="lazy" src="https://embed.api.video/vod/'.$videoId.'" width="100%" height="100%" frameborder="0" scrolling="no" allowfullscreen="true"></iframe></div>';
 }
 add_shortcode('api.video', 'apivideowp_shortcode');
 

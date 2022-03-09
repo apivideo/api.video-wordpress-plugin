@@ -48,7 +48,7 @@ trait HttpClientTrait
                 throw new InvalidArgumentException(sprintf('Invalid HTTP method "%s", only uppercase letters are accepted.', $method));
             }
             if (!$method) {
-                throw new InvalidArgumentException('The HTTP method can not be empty.');
+                throw new InvalidArgumentException('The HTTP method cannot be empty.');
             }
         }
 
@@ -98,6 +98,14 @@ trait HttpClientTrait
 
         if (isset($options['body'])) {
             $options['body'] = self::normalizeBody($options['body']);
+
+            if (\is_string($options['body'])
+                && (string) \strlen($options['body']) !== substr($h = $options['normalized_headers']['content-length'][0] ?? '', 16)
+                && ('' !== $h || ('' !== $options['body'] && !isset($options['normalized_headers']['transfer-encoding'])))
+            ) {
+                $options['normalized_headers']['content-length'] = [substr_replace($h ?: 'Content-Length: ', \strlen($options['body']), 16)];
+                $options['headers'] = array_merge(...array_values($options['normalized_headers']));
+            }
         }
 
         if (isset($options['peer_fingerprint'])) {
@@ -159,7 +167,10 @@ trait HttpClientTrait
 
         // Finalize normalization of options
         $options['http_version'] = (string) ($options['http_version'] ?? '') ?: null;
-        $options['timeout'] = (float) ($options['timeout'] ?? ini_get('default_socket_timeout'));
+        if (0 > $options['timeout'] = (float) ($options['timeout'] ?? ini_get('default_socket_timeout'))) {
+            $options['timeout'] = 172800.0; // 2 days
+        }
+
         $options['max_duration'] = isset($options['max_duration']) ? (float) $options['max_duration'] : 0;
 
         return [$url, $options];
@@ -188,8 +199,10 @@ trait HttpClientTrait
         // Option "query" is never inherited from defaults
         $options['query'] = $options['query'] ?? [];
 
-        foreach ($defaultOptions as $k => $v) {
-            if ('normalized_headers' !== $k && !isset($options[$k])) {
+        $options += $defaultOptions;
+
+        foreach (self::$emptyDefaults ?? [] as $k => $v) {
+            if (!isset($options[$k])) {
                 $options[$k] = $v;
             }
         }
@@ -226,9 +239,9 @@ trait HttpClientTrait
 
             $alternatives = [];
 
-            foreach ($defaultOptions as $key => $v) {
-                if (levenshtein($name, $key) <= \strlen($name) / 3 || str_contains($key, $name)) {
-                    $alternatives[] = $key;
+            foreach ($defaultOptions as $k => $v) {
+                if (levenshtein($name, $k) <= \strlen($name) / 3 || str_contains($k, $name)) {
+                    $alternatives[] = $k;
                 }
             }
 
@@ -291,7 +304,18 @@ trait HttpClientTrait
     private static function normalizeBody($body)
     {
         if (\is_array($body)) {
-            return http_build_query($body, '', '&', \PHP_QUERY_RFC1738);
+            array_walk_recursive($body, $caster = static function (&$v) use (&$caster) {
+                if (\is_object($v)) {
+                    if ($vars = get_object_vars($v)) {
+                        array_walk_recursive($vars, $caster);
+                        $v = $vars;
+                    } elseif (method_exists($v, '__toString')) {
+                        $v = (string) $v;
+                    }
+                }
+            });
+
+            return http_build_query($body, '', '&');
         }
 
         if (\is_string($body)) {
@@ -485,7 +509,7 @@ trait HttpClientTrait
                 throw new InvalidArgumentException(sprintf('Unsupported IDN "%s", try enabling the "intl" PHP extension or running "composer require symfony/polyfill-intl-idn".', $host));
             }
 
-            $host = \defined('INTL_IDNA_VARIANT_UTS46') ? idn_to_ascii($host, \IDNA_DEFAULT, \INTL_IDNA_VARIANT_UTS46) ?: strtolower($host) : strtolower($host);
+            $host = \defined('INTL_IDNA_VARIANT_UTS46') ? idn_to_ascii($host, \IDNA_DEFAULT | \IDNA_USE_STD3_RULES | \IDNA_CHECK_BIDI | \IDNA_CHECK_CONTEXTJ | \IDNA_NONTRANSITIONAL_TO_ASCII, \INTL_IDNA_VARIANT_UTS46) ?: strtolower($host) : strtolower($host);
             $host .= $port ? ':'.$port : '';
         }
 

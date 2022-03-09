@@ -41,11 +41,16 @@ class BaseClient
      */
     private $streamFactory;
 
-
     /**
      * @var int
      */
     private $chunkSize;
+
+    /**
+     * @var string
+     */
+    private $originAppHeaderValue;
+
 
 
     /**
@@ -63,9 +68,10 @@ class BaseClient
         $this->requestFactory = $requestFactory;
         $this->streamFactory = $streamFactory;
         $this->chunkSize = $chunkSize;
+        $this->originAppHeaderValue = "";
 
         if ($apiKey) {
-            $this->authenticator = new Authenticator($this, $apiKey);
+            $this->authenticator = new Authenticator($this, $apiKey, 'php:1.2.2');
         }
     }
 
@@ -92,9 +98,38 @@ class BaseClient
             $request = $request->withHeader($name, $value);
         }
 
-        $request = $request->withHeader('User-Agent', 'api.video client (php; v:0.0.7; )');
+        if($this->originAppHeaderValue) {
+            $request = $request->withHeader('AV-Origin-App', $this->originAppHeaderValue);
+        }
+        $request = $request->withHeader('AV-Origin-Client', 'php:1.2.2');
 
         return $this->sendRequest($request);
+    }
+
+    /**
+     * @param string $applicationName the application name. Allowed characters: A-Z, a-z, 0-9, -. Max length: 50.
+     * @param string $applicationVersion the application version (optional). Pattern: xxx[.yyy][.zzz].
+     */
+    public function setApplicationName(string $applicationName, string $applicationVersion = "") {
+        if($applicationVersion && !$applicationName) {
+            throw new \InvalidArgumentException("applicationName is mandatory when applicationVersion is set.");
+        }
+
+        if ($applicationName && !preg_match_all('/^[\w\-]{1,50}$/m', $applicationName)) {
+            throw new \InvalidArgumentException('Invalid applicationName value. Allowed characters: A-Z, a-z, 0-9, "-", "_". Max length: 50.');
+        }
+
+        if ($applicationVersion && !preg_match_all('/^\d{1,3}(\.\d{1,3}(\.\d{1,3})?)?$/m', $applicationVersion)) {
+            throw new \InvalidArgumentException('Invalid applicationVersion value. The version should match the xxx[.yyy][.zzz] pattern.');
+        }
+
+        $this->originAppHeaderValue = $applicationVersion
+            ? $applicationName . ":" . $applicationVersion
+            : $applicationName;
+
+        if($this->authenticator) {
+            $this->authenticator->setOriginAppHeaderValue($this->originAppHeaderValue);
+        }
     }
 
     /**
