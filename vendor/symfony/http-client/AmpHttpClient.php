@@ -17,6 +17,7 @@ use Amp\Http\Client\InterceptedHttpClient;
 use Amp\Http\Client\PooledHttpClient;
 use Amp\Http\Client\Request;
 use Amp\Http\Tunnel\Http1TunnelConnector;
+use Amp\Promise;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpClient\Exception\TransportException;
@@ -29,7 +30,11 @@ use Symfony\Contracts\HttpClient\ResponseStreamInterface;
 use Symfony\Contracts\Service\ResetInterface;
 
 if (!interface_exists(DelegateHttpClient::class)) {
-    throw new \LogicException('You cannot use "Symfony\Component\HttpClient\AmpHttpClient" as the "amphp/http-client" package is not installed. Try running "composer require amphp/http-client".');
+    throw new \LogicException('You cannot use "Symfony\Component\HttpClient\AmpHttpClient" as the "amphp/http-client" package is not installed. Try running "composer require amphp/http-client:^4.2.1".');
+}
+
+if (!interface_exists(Promise::class)) {
+    throw new \LogicException('You cannot use "Symfony\Component\HttpClient\AmpHttpClient" as the installed "amphp/http-client" is not compatible with this version of "symfony/http-client". Try downgrading "amphp/http-client" to "^4.2.1".');
 }
 
 /**
@@ -43,16 +48,17 @@ final class AmpHttpClient implements HttpClientInterface, LoggerAwareInterface, 
     use LoggerAwareTrait;
 
     private $defaultOptions = self::OPTIONS_DEFAULTS;
+    private static $emptyDefaults = self::OPTIONS_DEFAULTS;
 
     /** @var AmpClientState */
     private $multi;
 
     /**
-     * @param array    $defaultOptions     Default requests' options
-     * @param callable $clientConfigurator A callable that builds a {@see DelegateHttpClient} from a {@see PooledHttpClient};
-     *                                     passing null builds an {@see InterceptedHttpClient} with 2 retries on failures
-     * @param int      $maxHostConnections The maximum number of connections to a single host
-     * @param int      $maxPendingPushes   The maximum number of pushed responses to accept in the queue
+     * @param array         $defaultOptions     Default requests' options
+     * @param callable|null $clientConfigurator A callable that builds a {@see DelegateHttpClient} from a {@see PooledHttpClient};
+     *                                          passing null builds an {@see InterceptedHttpClient} with 2 retries on failures
+     * @param int           $maxHostConnections The maximum number of connections to a single host
+     * @param int           $maxPendingPushes   The maximum number of pushed responses to accept in the queue
      *
      * @see HttpClientInterface::OPTIONS_DEFAULTS for available options
      */
@@ -91,7 +97,7 @@ final class AmpHttpClient implements HttpClientInterface, LoggerAwareInterface, 
             }
         }
 
-        if ('' !== $options['body'] && 'POST' === $method && !isset($options['normalized_headers']['content-type'])) {
+        if (('' !== $options['body'] || 'POST' === $method || isset($options['normalized_headers']['content-length'])) && !isset($options['normalized_headers']['content-type'])) {
             $options['headers'][] = 'Content-Type: application/x-www-form-urlencoded';
         }
 

@@ -35,7 +35,6 @@ class ComposerStaticInit5dffc514987129849e3c99131f15e201
         'H' => 
         array (
             'Http\\Message\\MultipartStream\\' => 29,
-            'Http\\Message\\' => 13,
             'Http\\Discovery\\' => 15,
         ),
         'A' => 
@@ -90,10 +89,6 @@ class ComposerStaticInit5dffc514987129849e3c99131f15e201
         array (
             0 => __DIR__ . '/..' . '/php-http/multipart-stream-builder/src',
         ),
-        'Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
-        ),
         'Http\\Discovery\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-http/discovery/src',
@@ -108,6 +103,7 @@ class ComposerStaticInit5dffc514987129849e3c99131f15e201
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
