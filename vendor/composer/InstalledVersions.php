@@ -24,42 +24,42 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => 'v1.0.5',
-    'version' => '1.0.5.0',
+    'pretty_version' => '1.0.0+no-version-set',
+    'version' => '1.0.0.0',
     'aliases' => 
     array (
     ),
-    'reference' => '7a31f2fb7289d002d6321cbaaa540cfd87704e12',
+    'reference' => NULL,
     'name' => '__root__',
   ),
   'versions' => 
   array (
     '__root__' => 
     array (
-      'pretty_version' => 'v1.0.5',
-      'version' => '1.0.5.0',
+      'pretty_version' => '1.0.0+no-version-set',
+      'version' => '1.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '7a31f2fb7289d002d6321cbaaa540cfd87704e12',
+      'reference' => NULL,
     ),
     'api-video/php-api-client' => 
     array (
-      'pretty_version' => 'v1.2.2',
-      'version' => '1.2.2.0',
+      'pretty_version' => 'v1.2.6',
+      'version' => '1.2.6.0',
       'aliases' => 
       array (
       ),
-      'reference' => '7a4ae214e2adeefaaf764fda442e72081e1d58c3',
+      'reference' => 'fe530d1daa804990087ebad1cff46be0dd710d59',
     ),
     'nyholm/psr7' => 
     array (
-      'pretty_version' => '1.4.1',
-      'version' => '1.4.1.0',
+      'pretty_version' => '1.8.0',
+      'version' => '1.8.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2212385b47153ea71b1c1b1374f8cb5e4f7892ec',
+      'reference' => '3cb4d163b58589e47b35103e8e5e6a6a475b47be',
     ),
     'php-http/async-client-implementation' => 
     array (
@@ -77,30 +77,28 @@ private static $installed = array (
     ),
     'php-http/discovery' => 
     array (
-      'pretty_version' => '1.14.1',
-      'version' => '1.14.1.0',
+      'pretty_version' => '1.18.1',
+      'version' => '1.18.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'de90ab2b41d7d61609f504e031339776bc8c7223',
+      'reference' => 'f258b3a1d16acb7b21f3b42d7a2494a733365237',
     ),
-    'php-http/message-factory' => 
+    'php-http/message-factory-implementation' => 
     array (
-      'pretty_version' => 'v1.0.2',
-      'version' => '1.0.2.0',
-      'aliases' => 
+      'provided' => 
       array (
+        0 => '1.0',
       ),
-      'reference' => 'a478cb11f66a6ac48d8954216cfed9aa06a501a1',
     ),
     'php-http/multipart-stream-builder' => 
     array (
-      'pretty_version' => '1.2.0',
-      'version' => '1.2.0.0',
+      'pretty_version' => '1.3.0',
+      'version' => '1.3.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '11c1d31f72e01c738bbce9e27649a7cca829c30e',
+      'reference' => 'f5938fd135d9fa442cc297dc98481805acfe2b6a',
     ),
     'psr/container' => 
     array (
@@ -113,50 +111,53 @@ private static $installed = array (
     ),
     'psr/http-client' => 
     array (
-      'pretty_version' => '1.0.1',
-      'version' => '1.0.1.0',
+      'pretty_version' => '1.0.2',
+      'version' => '1.0.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2dfb5f6c5eff0e91e20e913f8c5452ed95b86621',
+      'reference' => '0955afe48220520692d2d09f7ab7e0f93ffd6a31',
     ),
     'psr/http-client-implementation' => 
     array (
       'provided' => 
       array (
-        0 => '1.0',
+        0 => '*',
+        1 => '1.0',
       ),
     ),
     'psr/http-factory' => 
     array (
-      'pretty_version' => '1.0.1',
-      'version' => '1.0.1.0',
+      'pretty_version' => '1.0.2',
+      'version' => '1.0.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '12ac7fcd07e5b077433f5f2bee95b3a771bf61be',
+      'reference' => 'e616d01114759c4c489f93b099585439f795fe35',
     ),
     'psr/http-factory-implementation' => 
     array (
       'provided' => 
       array (
         0 => '1.0',
+        1 => '*',
       ),
     ),
     'psr/http-message' => 
     array (
-      'pretty_version' => '1.0.1',
-      'version' => '1.0.1.0',
+      'pretty_version' => '2.0',
+      'version' => '2.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f6561bf28d520154e4b0ec72be95418abe6d9363',
+      'reference' => '402d35bcb92c70c026d1a6a9883f06b2ead23d71',
     ),
     'psr/http-message-implementation' => 
     array (
       'provided' => 
       array (
         0 => '1.0',
+        1 => '*',
       ),
     ),
     'psr/log' => 
@@ -170,30 +171,30 @@ private static $installed = array (
     ),
     'symfony/deprecation-contracts' => 
     array (
-      'pretty_version' => 'v2.4.0',
-      'version' => '2.4.0.0',
+      'pretty_version' => 'v2.5.2',
+      'version' => '2.5.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '5f38c8804a9e97d23e0c8d63341088cd8a22d627',
+      'reference' => 'e8b495ea28c1d97b5e0c121748d6f9b53d075c66',
     ),
     'symfony/http-client' => 
     array (
-      'pretty_version' => 'v5.3.8',
-      'version' => '5.3.8.0',
+      'pretty_version' => 'v5.4.24',
+      'version' => '5.4.24.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c6370fe2c0a445aedc08f592a6a3149da1fea4c7',
+      'reference' => '9e89ac4c9dfe29f4ed2b10a36e62720286632ad6',
     ),
     'symfony/http-client-contracts' => 
     array (
-      'pretty_version' => 'v2.4.0',
-      'version' => '2.4.0.0',
+      'pretty_version' => 'v2.5.2',
+      'version' => '2.5.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '7e82f6084d7cae521a75ef2cb5c9457bbda785f4',
+      'reference' => 'ba6a9f0e8f3edd190520ee3b9a958596b6ca2e70',
     ),
     'symfony/http-client-implementation' => 
     array (
@@ -204,30 +205,30 @@ private static $installed = array (
     ),
     'symfony/polyfill-php73' => 
     array (
-      'pretty_version' => 'v1.23.0',
-      'version' => '1.23.0.0',
+      'pretty_version' => 'v1.27.0',
+      'version' => '1.27.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'fba8933c384d6476ab14fb7b8526e5287ca7e010',
+      'reference' => '9e8ecb5f92152187c4799efd3c96b78ccab18ff9',
     ),
     'symfony/polyfill-php80' => 
     array (
-      'pretty_version' => 'v1.23.1',
-      'version' => '1.23.1.0',
+      'pretty_version' => 'v1.27.0',
+      'version' => '1.27.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '1100343ed1a92e3a38f9ae122fc0eb21602547be',
+      'reference' => '7a6ff3f1959bb01aefccb463a0f2cd3d3d2fd936',
     ),
     'symfony/service-contracts' => 
     array (
-      'pretty_version' => 'v2.4.0',
-      'version' => '2.4.0.0',
+      'pretty_version' => 'v2.5.2',
+      'version' => '2.5.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'f040a30e04b57fbcc9c6cbcf4dbaa96bd318b9bb',
+      'reference' => '4b426aac47d6427cc1a1d0f7e2ac724627f5966c',
     ),
   ),
 );

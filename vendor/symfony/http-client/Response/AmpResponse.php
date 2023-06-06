@@ -47,7 +47,6 @@ final class AmpResponse implements ResponseInterface, StreamableInterface
 
     private $multi;
     private $options;
-    private $canceller;
     private $onProgress;
 
     private static $delay;
@@ -73,7 +72,7 @@ final class AmpResponse implements ResponseInterface, StreamableInterface
 
         $info = &$this->info;
         $headers = &$this->headers;
-        $canceller = $this->canceller = new CancellationTokenSource();
+        $canceller = new CancellationTokenSource();
         $handle = &$this->handle;
 
         $info['url'] = (string) $request->getUri();
@@ -87,6 +86,7 @@ final class AmpResponse implements ResponseInterface, StreamableInterface
         $info['upload_content_length'] = -1.0;
         $info['download_content_length'] = -1.0;
         $info['user_data'] = $options['user_data'];
+        $info['max_duration'] = $options['max_duration'];
         $info['debug'] = '';
 
         $onProgress = $options['on_progress'] ?? static function () {};
@@ -125,6 +125,7 @@ final class AmpResponse implements ResponseInterface, StreamableInterface
             }
         };
 
+        $multi->lastTimeout = null;
         $multi->openHandles[$id] = $id;
         ++$multi->responseCount;
 
@@ -142,10 +143,7 @@ final class AmpResponse implements ResponseInterface, StreamableInterface
         return null !== $type ? $this->info[$type] ?? null : $this->info;
     }
 
-    /**
-     * @return array
-     */
-    public function __sleep()
+    public function __sleep(): array
     {
         throw new \BadMethodCallException('Cannot serialize '.__CLASS__);
     }
@@ -329,7 +327,7 @@ final class AmpResponse implements ResponseInterface, StreamableInterface
                 // Discard body of redirects
                 while (null !== yield $response->getBody()->read()) {
                 }
-            } catch (HttpException | StreamException $e) {
+            } catch (HttpException|StreamException $e) {
                 // Ignore streaming errors on previous responses
             }
 
@@ -359,7 +357,7 @@ final class AmpResponse implements ResponseInterface, StreamableInterface
             }
 
             foreach ($originRequest->getRawHeaders() as [$name, $value]) {
-                $request->setHeader($name, $value);
+                $request->addHeader($name, $value);
             }
 
             if ($request->getUri()->getAuthority() !== $originRequest->getUri()->getAuthority()) {
