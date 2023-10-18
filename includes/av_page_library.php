@@ -56,7 +56,7 @@ function apivideowp_library() { ?>
 
       // Check if videos exist
       $videos = [];
-      $currentPageNum = 0; 
+      $currentPageNum = 1; 
       do {
           $currentPage = $client->videos()->list(["sortBy" => "publishedAt", "sortOrder" => "desc", "currentPage" => $currentPageNum]);
           $currentPageNum++;
