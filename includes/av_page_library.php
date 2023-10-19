@@ -44,6 +44,8 @@ function apivideowp_library() { ?>
 
         $apivideowp_tags = explode(',', sanitize_text_field($_POST['input_tags']));
         $apivideowp_tags = str_replace(' ', '', $apivideowp_tags);
+        $apivideowp_tags = array_diff($apivideowp_tags, array(""));
+        
 
         $client->videos()->update($_POST['videoid'], (new \ApiVideo\Client\Model\VideoUpdatePayload())
           ->setTitle(sanitize_text_field($_POST['input_title']))
