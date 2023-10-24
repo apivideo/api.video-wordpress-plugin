@@ -41,7 +41,7 @@ function apivideowp_get_client()
         $httpClient
     );
 
-    $client->setSdkName("wordpress-plugin", "1.0.6");
+    $client->setSdkName("wordpress-plugin", "1.0.9");
 
     return $client;
 }
