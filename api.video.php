@@ -3,7 +3,7 @@
  * Plugin Name: api.video
  * Plugin URI: https://api.video/
  * Description: <a target="_blank" href="https://api.video">api.video</a> provides video infrastructure for product builders. Use <a target="_blank" href="https://api.video">api.video</a> lightning-fast video APIs for integrating, scaling, and managing on-demand & low latency live streaming features in your WordPress site.
- * Version: 1.0.6
+ * Version: 1.0.9
  * Author: api.video
  * Author URI: https://api.video/
  * 
