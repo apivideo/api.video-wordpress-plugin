@@ -2,8 +2,8 @@
 Contributors: apivideoecosystem
 Tags: video, player
 Requires at least: 5.0
-Tested up to: 6.2.2
-Stable tag: 1.0.6
+Tested up to: 6.3.2
+Stable tag: 1.0.8
 Requires PHP: 7.0
 License: MIT
 License URI: https://raw.githubusercontent.com/apivideo/api.video-wordpress-plugin/main/LICENSE
